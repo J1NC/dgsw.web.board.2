@@ -2,6 +2,7 @@ const Post = require('../../models/post');
 
 exports.list = (req, res) => {
     const page = req.params.page;
+    const board = req.params.board;
     const amount = req.query.amount;
     const sort = req.query.sort;
 
@@ -18,7 +19,7 @@ exports.list = (req, res) => {
         });
     };
 
-    Post.list(page, amount, sort)
+    Post.list(page, board, amount, sort)
     .then(respond)
     .catch(onError);
 }
@@ -28,11 +29,12 @@ exports.create = (req, res) => {
         title,
         author,
         content,
-        comment_allow
+        comment_allow,
+        board
     } = req.body;
 
     const create = () => {
-        return Post.create(title, author, content, comment_allow);
+        return Post.create(title, author, content, comment_allow,board);
     };
 
     const respond = (post) => {

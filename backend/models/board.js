@@ -10,10 +10,10 @@ board.statics.list = function() {
     return this.find().exec();
 }
 
-board.statics.create = function(title, ex) {
+board.statics.create = function(title, explanation) {
     const board = new this({
         title,
-        ex
+        explanation
     });
 
     return board.save();

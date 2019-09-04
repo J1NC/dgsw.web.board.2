@@ -12,11 +12,12 @@ const post = new Schema({
     board: { type: Schema.Types.ObjectId, ref: 'board' },
 });
 
-post.statics.create = function(title, author, content) {
+post.statics.create = function(title, author, content, board) {
     const post = new this({
         title,
         author,
-        content
+        content,
+        board
     });
 
     return post.save();
@@ -32,15 +33,27 @@ post.statics.deleteByUid = function(_id){
     return this.deleteOne({'_id' : _id}).exec();
 }
 
-post.statics.list = function(page, amount, sortType) {
-    switch(sortType){
-        case 'writed' : 
-            return this.find().sort({'writed_at' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
-        break;
-        
-        case 'like' :
-            return this.find().sort({'likes' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
+post.statics.list = function(page, board, amount, sortType) {
+    if (board == 'all'){
+        switch(sortType){
+            case 'writed' : 
+                return this.find().sort({'writed_at' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
             break;
+            
+            case 'like' :
+                return this.find().sort({'likes' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
+                break;
+        }
+    } else {
+        switch(sortType){
+            case 'writed' : 
+                return this.find({'board': board}).sort({'writed_at' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
+            break;
+            
+            case 'like' :
+                return this.find({'board': board}).sort({'likes' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
+                break;
+        }
     }
 }
 
