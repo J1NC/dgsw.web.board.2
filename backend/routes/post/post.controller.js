@@ -29,12 +29,11 @@ exports.create = (req, res) => {
         title,
         author,
         content,
-        comment_allow,
         board
     } = req.body;
 
     const create = () => {
-        return Post.create(title, author, content, comment_allow,board);
+        return Post.create(title, author, content, board);
     };
 
     const respond = (post) => {

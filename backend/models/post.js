@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const post = new Schema({
     title: String,
-    author: { type: Schema.Types.ObjectId, ref: 'user' },
+    author: { type: Schema.Types.ObjectId, ref: 'users' },
     writed_at: { type: Date, default: Date.now },
     likes: { type: Number, default: 0 },
     dislikes: { type: Number, default: 0},
     view: { type: Number, default: 0 },
     content: String,
-    board: { type: Schema.Types.ObjectId, ref: 'board' },
+    board: { type: Schema.Types.ObjectId, ref: 'boards' },
 });
 
 post.statics.create = function(title, author, content, board) {
@@ -45,6 +45,7 @@ post.statics.list = function(page, board, amount, sortType) {
                 break;
         }
     } else {
+        console.log(board);
         switch(sortType){
             case 'writed' : 
                 return this.find({'board': board}).sort({'writed_at' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
