@@ -7,7 +7,7 @@ router.put('/:_id', controller.update);
 router.delete('/:_id', controller.delete);
 router.get('/detail/:_id', controller.get);
 
-router.put('/like/:_id', controller.like);
-router.put('/dislike/:_id', controller.dislike);
+router.get('/like/:_id', controller.like);
+router.get('/dislike/:_id', controller.dislike);
 
 module.exports = router;

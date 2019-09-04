@@ -47,16 +47,19 @@ post.statics.increaseView = function(_id){
 
 post.statics.increaseLike = function(_id){
     return this.update({'_id' : _id}, {
-        $inc: { 'like': 1 }
+        $inc: { 'likes': 1 }
     }).exec();
 }
 
 post.statics.increaseDisLike = function(_id){
     return this.update({'_id' : _id}, {
-        $inc: { 'dislike': 1 }
+        $inc: { 'dislikes': 1 }
     }).exec();
 }
 
+post.statics.getByAuthor = function(_id){
+    return this.find({'author' : _id}).exec();
+}
 post.statics.getByUid = function (_id){
     return this.findOne({'_id' : _id}).exec();
 }
