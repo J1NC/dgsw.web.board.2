@@ -24,6 +24,10 @@ User.statics.create = function(account, name, password, gender, age, profile){
 }
 
 User.statics.findByAccount = function(account){
-    return this.findOne({ 'account' : account }).exec();
+    return this.findOne({'account' : account}).exec();
+}
+
+User.statics.getByUid = function(_id){
+    return this.findOne({'_id': _id}).exec();
 }
 module.exports = mongoose.model('User', User);

@@ -74,6 +74,7 @@ exports.login = (req, res) => {
                 message: 'Account incorrect'
             });
         } else {
+            console.log(user);
             if(user.password != password){
                 res.status(200).json({
                     status: -1,
