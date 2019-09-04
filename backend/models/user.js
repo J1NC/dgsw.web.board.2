@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const user = new Schema({
+const User = new Schema({
     account: String,
     name: String,
     password: String,
@@ -10,4 +10,20 @@ const user = new Schema({
     profile: String,
 });
 
-module.exports = mongoose.model('User', user);
+User.statics.create = function(account, name, password, gender, age, profile){
+    const user = new this({
+        account,
+        name,
+        password,
+        gender,
+        age,
+        profile
+    });
+
+    return user.save();
+}
+
+User.statics.findByAccount = function(account){
+    return this.findOne({ 'account' : account }).exec();
+}
+module.exports = mongoose.model('User', User);
