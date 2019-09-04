@@ -95,3 +95,29 @@ exports.delete = (req, res) => {
     .then(respond)
     .catch(onError);
 }
+
+exports.get = (req, res) => {
+    const _id = req.params._id;
+
+    const getOne = (_id) => {
+        Post.increaseView(_id);
+        return Post.get(_id);
+    }
+
+    const respond = (post) => {
+        res.status(200).json({
+            post
+        });
+    };
+
+    const onError = (err) => {
+        res.status(500).json({
+            status: 'ERROR',
+            message: err.message
+        });
+    };
+    
+    getOne(_id)
+    .then(respond)
+    .catch(onError);
+}
