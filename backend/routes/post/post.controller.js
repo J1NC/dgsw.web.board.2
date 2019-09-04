@@ -121,3 +121,43 @@ exports.get = (req, res) => {
     .then(respond)
     .catch(onError);
 }
+
+exports.like = (req, res) => {
+    const _id = req.params._id;
+
+    const respond = (post) => {
+        res.status(200).json({
+            post
+        });
+    };
+
+    const onError = (err) => {
+        res.status(500).json({
+            status: 'ERROR',
+            message: err.message
+        });
+    };
+    Post.increaseLike(_id)
+    .then(respond)
+    .catch(onError);
+}
+
+exports.dislike = (req, res) => {
+    const _id = req.params._id;
+    
+    const respond = (post) => {
+        res.status(200).json({
+            post
+        });
+    };
+
+    const onError = (err) => {
+        res.status(500).json({
+            status: 'ERROR',
+            message: err.message
+        });
+    };
+    Post.increaseDisLike(_id)
+    .then(respond)
+    .catch(onError);
+}
