@@ -9,17 +9,14 @@ const post = new Schema({
     dislikes: { type: Number, default: 0},
     view: { type: Number, default: 0 },
     content: String,
-    comment_allow: Boolean,
-    comment: [String],
     board: { type: Schema.Types.ObjectId, ref: 'board' },
 });
 
-post.statics.create = function(title, author, content, comment_allow) {
+post.statics.create = function(title, author, content) {
     const post = new this({
         title,
         author,
-        content,
-        comment_allow
+        content
     });
 
     return post.save();
@@ -36,7 +33,15 @@ post.statics.deleteByUid = function(_id){
 }
 
 post.statics.list = function(page, amount, sortType) {
-    return this.find().sort({sortType : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
+    switch(sortType){
+        case 'writed' : 
+            return this.find().sort({'writed_at' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
+        break;
+        
+        case 'like' :
+            return this.find().sort({'likes' : -1}).skip((page-1) * amount).limit(parseInt(amount)).exec();
+            break;
+    }
 }
 
 post.statics.increaseView = function(_id){
@@ -60,7 +65,9 @@ post.statics.increaseDisLike = function(_id){
 post.statics.getByAuthor = function(_id){
     return this.find({'author' : _id}).exec();
 }
+
 post.statics.getByUid = function (_id){
     return this.findOne({'_id' : _id}).exec();
 }
+
 module.exports = mongoose.model('Post', post);
