@@ -70,7 +70,7 @@ exports.update = (req, res) => {
         });
     };
 
-    Post.update(_id, post)
+    Post.updateByUid(_id, post)
     .then(respond)
     .catch(onError);
 }
@@ -91,7 +91,7 @@ exports.delete = (req, res) => {
         });
     };
 
-    Post.delete(_id)
+    Post.deleteByUid(_id)
     .then(respond)
     .catch(onError);
 }
@@ -101,7 +101,7 @@ exports.get = (req, res) => {
 
     const getOne = (_id) => {
         Post.increaseView(_id);
-        return Post.get(_id);
+        return Post.getByUid(_id);
     }
 
     const respond = (post) => {
@@ -116,7 +116,7 @@ exports.get = (req, res) => {
             message: err.message
         });
     };
-    
+
     getOne(_id)
     .then(respond)
     .catch(onError);

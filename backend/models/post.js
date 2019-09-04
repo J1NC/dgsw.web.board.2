@@ -25,13 +25,13 @@ post.statics.create = function(title, author, content, comment_allow) {
     return post.save();
 }
 
-post.statics.update = function(_id, post){
+post.statics.updateByUid = function(_id, post){
     return this.update({'_id' : _id}, {
         $set: post
     }).exec();
 }
 
-post.statics.delete = function(_id){
+post.statics.deleteByUid = function(_id){
     return this.deleteOne({'_id' : _id}).exec();
 }
 
@@ -41,11 +41,11 @@ post.statics.list = function(page, amount, sortType) {
 
 post.statics.increaseView = function(_id){
     return this.update({'_id' : _id}, {
-        'view': view + 1
+        $inc: { 'view': 1 }
     }).exec();
 }
 
-post.statics.get = function (_id){
+post.statics.getByUid = function (_id){
     return this.findOne({'_id' : _id}).exec();
 }
 module.exports = mongoose.model('Post', post);
