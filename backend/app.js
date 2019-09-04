@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
+const appServer = app.listen(3000);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -25,7 +26,6 @@ db.once('open', () => {
     console.log(`MongoDB: successfully connected on ${mongoDest}`)
 })
 
-
-app.use('/', require('./routes/index'));
+app.use('/', require('./routes'));
 
 module.exports = app;
